@@ -9,7 +9,11 @@
   },
   "license": "ISC",
   "devDependencies": {
+    "eslint": "^7.17.0",
     "nodemon": "^2.0.7"
   },
-  "dependencies": {}
+  "dependencies": {
+    "parse": "^2.19.0"
+  },
+  "type": "module"
 }

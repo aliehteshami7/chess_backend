@@ -70,3 +70,8 @@ services:
             - parse_server
         depends_on:
             - parse_server
+        environment:
+            APP_ID: ${PARSE_APP_ID}
+            MASTER_KEY: ${PARSE_MASTER_KEY}
+            JS_KEY: ${PARSE_JAVASCRIPT_KEY}
+            SERVER_ADDRESS: ${PARSE_SERVER_URL}
