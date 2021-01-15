@@ -6,25 +6,25 @@ Parse.initialize(
   process.env.MASTER_KEY
 );
 
-Parse.serverURL = process.env.SERVER_ADDRESS;
-
-async function initSessions() {
-  const schema = new Parse.Schema("Sessions");
-  schema.addPointer("user1", "User");
-  schema.addPointer("user2", "User");
-  schema.save();
-}
+Parse.serverURL = process.env.INTERNAL_PARSE_SERVER_URL;
 
 async function initGame() {
-  const schema = new Parse.Schema("Games");
-  schema.addPointer("session", "Sessions", { required: true });
-  schema.addString("move", { required: true });
+  const schema = new Parse.Schema("Game");
+  schema.addPointer("user1", "User", { required: true });
+  schema.addPointer("user2", "User", { required: true });
+  schema.addString("fen", {
+    required: true,
+    defaultValue: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+  });
   schema.save();
 }
 
 async function initDB() {
-  await initSessions();
   await initGame();
 }
 
-initDB();
+try {
+  initDB();
+} catch (err) {
+  console.log(err);
+}
