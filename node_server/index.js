@@ -10,8 +10,8 @@ Parse.serverURL = process.env.INTERNAL_PARSE_SERVER_URL;
 
 async function initGame() {
   const schema = new Parse.Schema("Game");
-  schema.addPointer("user1", "User", { required: true });
-  schema.addPointer("user2", "User", { required: true });
+  schema.addPointer("user1", "_User");
+  schema.addPointer("user2", "_User");
   schema.addString("fen", {
     required: true,
     defaultValue: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
