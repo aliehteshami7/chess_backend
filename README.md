@@ -1,6 +1,6 @@
 # Installation
 
-First, create `mongo-init.js` file like the above codes:
+First, create `mongo-init.js` file like the bellow codes:
 
 ```
 db.createUser({
