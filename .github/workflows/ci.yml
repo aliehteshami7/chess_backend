@@ -11,7 +11,7 @@ jobs:
       - name: Make env
         run: cp .env-sample .env
       - name: Build the docker-compose stack
-        run: docker-compose up -d
+        run: docker-compose up
       - name: Sleep
         uses: jakejarvis/wait-action@master
         with:
