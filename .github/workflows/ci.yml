@@ -13,7 +13,7 @@ jobs:
           cp .env-sample .env
           cp mongo-init-sample.js mongo-init.js
       - name: Build the docker-compose stack
-        run: docker-compose up
+        run: docker-compose up -d
       - name: Sleep
         uses: jakejarvis/wait-action@master
         with:
