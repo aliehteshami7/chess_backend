@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  push to server:
+  push-to-server:
 
     runs-on: ubuntu-latest
 
