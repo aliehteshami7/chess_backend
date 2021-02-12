@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  push to server:
 
     runs-on: ubuntu-latest
 
@@ -13,7 +13,7 @@ jobs:
       - name: deploy command
         uses: garygrossgarten/github-action-ssh@release
         with:
-          command: cd chess_backend && git pull && docker-compose down && docker-compose up -d
+          command: echo salam
           host: ${{ secrets.HOST }}
-          username: ${{secrets.USERNAME}}
+          username: ${{ secrets.USERNAME }}
           passphrase: ${{ secrets.PASSPHRASE }}
