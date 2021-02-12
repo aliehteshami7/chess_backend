@@ -11,7 +11,7 @@ runs-on: ubuntu-latest
 steps:
   - uses: actions/checkout@v1
   - name: Make env
-    cp .env-sample .env
+    run: cp .env-sample .env
   - name: Build the docker-compose stack
     run: docker-compose up -d
   - name: Sleep
