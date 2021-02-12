@@ -27,7 +27,7 @@ services:
 
     parse_server:
         container_name: parse_server
-        image: parseplatform/parse-server
+        image: parseplatform/parse-server:4.5.0
         restart: always
         links:
             - mongo
