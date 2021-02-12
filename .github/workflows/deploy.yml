@@ -11,10 +11,9 @@ jobs:
 
     steps:
       - name: deploy command
-        uses: garygrossgarten/github-action-ssh@release
+        uses: appleboy/ssh-action@master
         with:
-          command: echo salam
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          passphrase: ${{ secrets.PASSPHRASE }}
-          privateKey: ${{ secrets.PRIVATE_KEY }}
+          password: ${{ secrets.PASSWORD }}
+          script: whoami
