@@ -1,0 +1,19 @@
+name: Node CI
+
+on: 
+  release: 
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: deploy command
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: cd chess_backend && git pull && docker-compose down && docker-compose up -d
+          host: ${{ secrets.HOST }}
+          username: ${{secrets.USERNAME}}
+          passphrase: ${{ secrets.PASSPHRASE }}
