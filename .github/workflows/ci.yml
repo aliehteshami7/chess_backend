@@ -4,19 +4,17 @@ on: [push]
 
 jobs:
 
-build:
-
-runs-on: ubuntu-latest
-
-steps:
-  - uses: actions/checkout@v1
-  - name: Make env
-    run: cp .env-sample .env
-  - name: Build the docker-compose stack
-    run: docker-compose up -d
-  - name: Sleep
-    uses: jakejarvis/wait-action@master
-    with:
-    time: '60s'
-  - name: Check running containers
-    run: docker ps -a
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Make env
+        run: cp .env-sample .env
+      - name: Build the docker-compose stack
+        run: docker-compose up -d
+      - name: Sleep
+        uses: jakejarvis/wait-action@master
+        with:
+        time: '60s'
+      - name: Check running containers
+        run: docker ps -a
