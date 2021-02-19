@@ -1,2 +1,2 @@
-require("./move");
-require("./join");
+import "./move";
+import "./join";
