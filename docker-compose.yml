@@ -27,7 +27,8 @@ services:
 
     parse_server:
         container_name: parse_server
-        build: ./parse_node
+        image: docker.pkg.github.com/aliehteshami7/chess_backend/parse_server:latest
+        # build: ./parse_node
         restart: always
         links:
             - mongo
@@ -68,7 +69,8 @@ services:
 
     node_server:
         container_name: node_server
-        build: ./node_server
+        image: docker.pkg.github.com/aliehteshami7/chess_backend/node_server:latest
+        # build: ./node_server
         volumes:
             - ./node_server:/usr/src/app
             - /usr/src/app/node_modules
