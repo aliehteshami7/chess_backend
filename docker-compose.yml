@@ -27,7 +27,7 @@ services:
 
     parse_server:
         container_name: parse_server
-        image: parseplatform/parse-server:4.5.0
+        build: ./parse_node
         restart: always
         links:
             - mongo
@@ -38,14 +38,14 @@ services:
             PARSE_SERVER_MASTER_KEY: ${PARSE_MASTER_KEY}
             PARSE_SERVER_JAVASCRIPT_KEY: ${PARSE_JAVASCRIPT_KEY}
             PARSE_SERVER_DATABASE_URI: "mongodb://${DB_USER}:${DB_PASS}@mongo:27017/${DB_NAME}"
-            PARSE_ENABLE_CLOUD_CODE: "yes"
-            PARSE_SERVER_SESSION_LENGTH: ${SERVER_SESSION_LENGTH_SECOND}
-            PARSE_SERVER_ALLOW_CLIENT_CLASS_CREATION: 0
-            PARSE_SERVER_START_LIVE_QUERY_SERVER: 1
+            # PARSE_ENABLE_CLOUD_CODE: "yes"
+            # PARSE_SERVER_SESSION_LENGTH: ${SERVER_SESSION_LENGTH_SECOND}
+            # PARSE_SERVER_ALLOW_CLIENT_CLASS_CREATION: 0
+            # PARSE_SERVER_START_LIVE_QUERY_SERVER: 1
             PARSE_SERVER_LIVE_QUERY: ${PARSE_LIVE_QUERY_CLASSES}
-            PARSE_LIVE_QUERY_SERVER_LOG_LEVEL: "VERBOSE"
-            VERBOSE: 1
-            PARSE_LIVE_QUERY_SERVER_VERBOSE: 1
+            # PARSE_LIVE_QUERY_SERVER_LOG_LEVEL: "VERBOSE"
+            # VERBOSE: 1
+            # PARSE_LIVE_QUERY_SERVER_VERBOSE: 1
             # See more https://github.com/parse-community/parse-server/blob/master/src/Options/Definitions.js
         volumes:
             - ./cloud:/parse-server/cloud
@@ -68,7 +68,6 @@ services:
     node_server:
         container_name: node_server
         build: ./node_server
-        restart: always
         volumes:
             - ./node_server:/usr/src/app
             - /usr/src/app/node_modules
