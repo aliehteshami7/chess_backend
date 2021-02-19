@@ -9,7 +9,7 @@ const api = new ParseServer({
   appId: process.env.PARSE_SERVER_APPLICATION_ID,
   masterKey: process.env.PARSE_SERVER_MASTER_KEY,
   javascriptKey: process.env.PARSE_SERVER_JAVASCRIPT_KEY,
-  liveQuery: process.env.PARSE_SERVER_LIVE_QUERY,
+  liveQuery: { classNames: ['Game', 'Request'] },
 });
 
 const port = 1337;
