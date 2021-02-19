@@ -1,2 +1,2 @@
-import "./move";
-import "./join";
+import './move';
+import './join';
