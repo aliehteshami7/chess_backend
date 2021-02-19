@@ -1,2 +1,3 @@
 import './move';
-import './join';
+import './joinGame';
+import './createGame';

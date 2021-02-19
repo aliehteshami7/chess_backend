@@ -5,7 +5,7 @@ const getGame = async (gameId) => {
 };
 
 Parse.Cloud.define(
-  'join',
+  'joinGame',
   async ({ params: { gameId }, user }) => {
     const game = await getGame(gameId);
     game.set('user2', user);
