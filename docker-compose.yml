@@ -8,7 +8,7 @@ services:
             - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
             - ./log/nginx:/var/log/nginx
         ports:
-            - "80:80"
+            - "8082:80"
         links:
             - node_server:node_server
             - parse_server:parse_server
@@ -46,9 +46,10 @@ services:
             # PARSE_LIVE_QUERY_SERVER_LOG_LEVEL: "VERBOSE"
             # VERBOSE: 1
             # PARSE_LIVE_QUERY_SERVER_VERBOSE: 1
+            # PARSE_SERVER_CLOUD: "/parse-server/cloud/main.js"
             # See more https://github.com/parse-community/parse-server/blob/master/src/Options/Definitions.js
         volumes:
-            - ./cloud:/parse-server/cloud
+            - ./cloud/dist:/parse-server/cloud
 
     parse_dashboard:
         container_name: parse_dashboard

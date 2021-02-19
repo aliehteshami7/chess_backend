@@ -8,23 +8,58 @@ Parse.initialize(
 
 Parse.serverURL = process.env.INTERNAL_PARSE_SERVER_URL;
 
-async function initGame() {
-  const schema = new Parse.Schema("Game");
-  schema.addPointer("user1", "_User");
-  schema.addPointer("user2", "_User");
-  schema.addString("fen", {
-    required: true,
-    defaultValue: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+function initGame() {
+  const schema = new Parse.Schema("Game")
+    .addPointer("user1", "_User", {
+      required: true,
+    })
+    .addPointer("user2", "_User")
+    .addArray("moves", {
+      required: true,
+      defaultValue: [],
+    })
+    .addString("state", {
+      required: true,
+      defaultValue: "NOT_STARTED", // valid options: NOT_STARTED, ON_GOING, DRAW, USER1_WON, USER2_WON
+    });
+  schema.setCLP({
+    get: { "*": true },
+    find: { "*": true },
+    count: { "*": true },
+    create: { requiresAuthentication: true },
+    update: {},
+    delete: {},
+    addField: {},
+    protectedFields: {},
   });
-  schema.save();
+  return schema.save();
 }
 
-async function initDB() {
-  await initGame();
+function updateUserSchema() {
+  return new Parse.Schema("_User")
+    .addNumber("current_win_streak", {
+      required: true,
+      defaultValue: 0,
+    })
+    .addArray("badges", {
+      required: true,
+      defaultValue: [],
+    })
+    .update();
 }
 
-try {
-  initDB();
-} catch (err) {
+const errorHandler = (err) => {
   console.log(err);
+  if (err.code === 100) {
+    initDB();
+  }
+};
+
+function initDB() {
+  setTimeout(() => {
+    initGame().catch(errorHandler);
+    updateUserSchema().catch(errorHandler);
+  }, 1000);
 }
+
+initDB();
