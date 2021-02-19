@@ -1,4 +1,5 @@
-import { hasActiveGame } from './hasActiveGame';
+import { GAME_STATES } from './game';
+import { hasActiveGame } from './user';
 
 const getGame = async (gameId) => {
   const query = new Parse.Query('Game');
@@ -13,9 +14,10 @@ Parse.Cloud.define(
       throw new Error('You have an active game!');
     }
     const game = await getGame(gameId);
-    game.set('user2', user);
-    game.set('state', 'ON_GOING');
-    await game.save({}, { useMasterKey: true });
+    await game.save(
+      { user2: user, state: GAME_STATES.ON_GOING },
+      { useMasterKey: true },
+    );
   },
   {
     fields: {
