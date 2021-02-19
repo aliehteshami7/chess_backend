@@ -26,7 +26,7 @@ function initGame() {
     get: { "*": true },
     find: { "*": true },
     count: { "*": true },
-    create: { requiresAuthentication: true },
+    create: {},
     update: {},
     delete: {},
     addField: {},

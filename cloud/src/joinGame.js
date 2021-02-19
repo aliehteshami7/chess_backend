@@ -1,5 +1,3 @@
-import Parse from "parse/node.js";
-
 const getGame = async (gameId) => {
   const query = new Parse.Query("Game");
   query.equalTo("objectId", gameId);
@@ -7,7 +5,7 @@ const getGame = async (gameId) => {
 };
 
 Parse.Cloud.define(
-  "join",
+  "joinGame",
   async ({ params: { gameId }, user }) => {
     const game = await getGame(gameId);
     game.set("user2", user);
