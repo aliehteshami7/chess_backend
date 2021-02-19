@@ -49,7 +49,7 @@ services:
             PARSE_SERVER_CLOUD: "/parse-server/cloud/main.js"
             # See more https://github.com/parse-community/parse-server/blob/master/src/Options/Definitions.js
         volumes:
-            - ./cloud:/parse-server/cloud
+            - ./cloud/dist:/parse-server/cloud
 
     parse_dashboard:
         container_name: parse_dashboard

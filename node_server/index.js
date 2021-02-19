@@ -9,7 +9,7 @@ Parse.initialize(
 Parse.serverURL = process.env.INTERNAL_PARSE_SERVER_URL;
 
 function initGame() {
-  new Parse.Schema("Game")
+  const schema = new Parse.Schema("Game")
     .addPointer("user1", "_User", {
       required: true,
     })
@@ -21,9 +21,18 @@ function initGame() {
     .addString("state", {
       required: true,
       defaultValue: "NOT_STARTED", // valid options: NOT_STARTED, ON_GOING, DRAW, USER1_WON, USER2_WON
-    })
-    .save()
-    .catch(console.log);
+    });
+  schema.setCLP({
+    get: { "*": true },
+    find: { "*": true },
+    count: { "*": true },
+    create: { requiresAuthentication: true },
+    update: {},
+    delete: {},
+    addField: {},
+    protectedFields: {},
+  });
+  schema.save().catch(console.log);
 }
 
 function updateUserSchema() {
