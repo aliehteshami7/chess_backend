@@ -3,7 +3,21 @@ name: Docker Image CI
 on: [push]
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14' 
+      - name: run tests
+        run: |
+          cd parse_node
+          yarn
+          ./node_modules/jasmine/bin/jasmine.js
+
   build-node-server-docker:
+    needs: [test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -13,7 +27,9 @@ jobs:
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login https://docker.pkg.github.com -u ${GITHUB_ACTOR} --password-stdin
           docker build -t docker.pkg.github.com/aliehteshami7/chess_backend/node_server:latest .
           docker push docker.pkg.github.com/aliehteshami7/chess_backend/node_server:latest
+
   build-parse-server-docker:
+    needs: [test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -23,7 +39,8 @@ jobs:
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login https://docker.pkg.github.com -u ${GITHUB_ACTOR} --password-stdin
           docker build -t docker.pkg.github.com/aliehteshami7/chess_backend/parse_server:latest .
           docker push docker.pkg.github.com/aliehteshami7/chess_backend/parse_server:latest
-  test:
+
+  integrate-test:
     needs: [build-node-server-docker, build-parse-server-docker]
     runs-on: ubuntu-20.04
     steps:
@@ -34,7 +51,7 @@ jobs:
           cp .env-sample .env
           cp mongo-init-sample.js mongo-init.js
       - name: Build the docker-compose stack
-        run: docker-compose up -d
+        run: docker-compose up -d -f docker-compose.prod.yml
       - name: Sleep
         uses: kibertoad/wait-action@1.0.1
         with:
