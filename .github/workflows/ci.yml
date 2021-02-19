@@ -3,8 +3,26 @@ name: Docker Image CI
 on: [push]
 
 jobs:
-
+  build-node-server-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          cd node_server
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login https://docker.pkg.github.com -u ${GITHUB_ACTOR} --password-stdin
+          docker build -t docker.pkg.github.com/aliehteshami7/chess_backend/node_server:latest .
+          docker push docker.pkg.github.com/aliehteshami7/chess_backend/node_server:latest
+  build-parse-server-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          cd parse_node
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login https://docker.pkg.github.com -u ${GITHUB_ACTOR} --password-stdin
+          docker build -t docker.pkg.github.com/aliehteshami7/chess_backend/parse_server:latest .
+          docker push docker.pkg.github.com/aliehteshami7/chess_backend/parse_server:latest
   build:
+    needs: [build-node-server-docker, build-parse-server-docker]
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v1
@@ -17,6 +35,6 @@ jobs:
       - name: Sleep
         uses: kibertoad/wait-action@1.0.1
         with:
-          time: '90s'
+          time: "90s"
       - name: Check running containers
         run: docker ps -a
