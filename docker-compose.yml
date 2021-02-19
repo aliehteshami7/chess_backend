@@ -68,7 +68,6 @@ services:
     node_server:
         container_name: node_server
         build: ./node_server
-        restart: always
         volumes:
             - ./node_server:/usr/src/app
             - /usr/src/app/node_modules
