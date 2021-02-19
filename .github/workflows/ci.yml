@@ -19,7 +19,7 @@ jobs:
       - run: |
           cd parse_node
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login https://docker.pkg.github.com -u ${GITHUB_ACTOR} --password-stdin
-          docker build -t docker.pkg.github.com/aliehteshami7/chess_backend/parse_Server:latest .
+          docker build -t docker.pkg.github.com/aliehteshami7/chess_backend/parse_server:latest .
           docker push docker.pkg.github.com/aliehteshami7/chess_backend/parse_server:latest
   build:
     needs: [build-node-server-docker, build-parse-server-docker]
