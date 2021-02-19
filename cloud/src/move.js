@@ -5,12 +5,12 @@ const getGame = async (gameId) => {
   const query = new Parse.Query("Game");
   query.equalTo("objectId", gameId);
   const game = await query.first();
-  const moves = game.get("moves");
+  const moves = game.get("moves") || [];
   const logic = runMoves(moves);
   return { game, logic, turn: moves.length % 2 };
 };
 
-const runMoves = (moves) => {
+const runMoves = (moves = []) => {
   const logic = new chess(
     "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
   );
