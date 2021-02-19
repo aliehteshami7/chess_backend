@@ -1,15 +1,20 @@
-import { correctUser, GAME_STATES, getGame, updateGameState } from './game';
+import {
+  correctUser,
+  GAME_STATES,
+  getFullGame,
+  updateGameState,
+} from '../game';
 
 Parse.Cloud.define(
   'move',
   async ({ params: { gameId, move }, user }) => {
-    const { logic, game, turn } = await getGame(gameId);
+    const { logic, game, turn } = await getFullGame(gameId);
     if (
       game.get('state') !== GAME_STATES.ON_GOING ||
       !correctUser(game, user, turn) ||
       !logic.move(move)
     )
-      return false;
+      throw new Error("You don't have permission!");
 
     game.add('moves', move);
 
