@@ -34,7 +34,7 @@ jobs:
           cp .env-sample .env
           cp mongo-init-sample.js mongo-init.js
       - name: Build the docker-compose stack
-        run: docker-compose up -d
+        run: docker-compose up -d -f docker-compose.prod.yml
       - name: Sleep
         uses: kibertoad/wait-action@1.0.1
         with:
