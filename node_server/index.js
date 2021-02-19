@@ -32,11 +32,11 @@ function initGame() {
     addField: {},
     protectedFields: {},
   });
-  schema.save().catch(console.log);
+  return schema.save();
 }
 
 function updateUserSchema() {
-  new Parse.Schema("_User")
+  return new Parse.Schema("_User")
     .addNumber("current_win_streak", {
       required: true,
       defaultValue: 0,
@@ -45,15 +45,21 @@ function updateUserSchema() {
       required: true,
       defaultValue: [],
     })
-    .update()
-    .catch(console.log);
+    .update();
 }
+
+const errorHandler = (err) => {
+  console.log(err);
+  if (err.code === 100) {
+    initDB();
+  }
+};
 
 function initDB() {
   setTimeout(() => {
-    initGame();
-    updateUserSchema();
-  }, 5000);
+    initGame().catch(errorHandler);
+    updateUserSchema().catch(errorHandler);
+  }, 1000);
 }
 
 initDB();
