@@ -126,3 +126,5 @@ data/
 .env
 
 mongo-init.js
+
+log/

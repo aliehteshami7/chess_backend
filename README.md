@@ -24,3 +24,12 @@ docker-compose up
 ```
 
 See `http://localhost/parse_dashboard`.
+
+## Create Cloud Codes
+
+Go to cloud dir and run above code.
+
+```
+yarn
+yarn build
+```
