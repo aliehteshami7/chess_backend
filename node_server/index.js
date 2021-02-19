@@ -8,7 +8,7 @@ Parse.initialize(
 
 Parse.serverURL = process.env.INTERNAL_PARSE_SERVER_URL;
 
-function initGame() {
+function initGameSchema() {
   const schema = new Parse.Schema('Game')
     .addPointer('user1', '_User', {
       required: true,
@@ -26,6 +26,26 @@ function initGame() {
     get: { '*': true },
     find: { '*': true },
     count: { '*': true },
+    create: {},
+    update: {},
+    delete: {},
+    addField: {},
+    protectedFields: {},
+  });
+  return schema.save();
+}
+
+function initRequestSchema() {
+  const schema = new Parse.Schema('Request')
+    .addPointer('user1', '_User', {
+      required: true,
+    })
+    .addPointer('user2', '_User');
+
+  schema.setCLP({
+    get: { requiresAuthentication: true },
+    find: { requiresAuthentication: true },
+    count: { requiresAuthentication: true },
     create: {},
     update: {},
     delete: {},
@@ -61,7 +81,8 @@ const errorHandler = (err) => {
 
 function initDB() {
   setTimeout(() => {
-    initGame().catch(errorHandler);
+    initGameSchema().catch(errorHandler);
+    initRequestSchema().catch(errorHandler);
     updateUserSchema().catch(errorHandler);
   }, 1000);
 }
