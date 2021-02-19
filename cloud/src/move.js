@@ -49,7 +49,7 @@ Parse.Cloud.define(
 
     await updateGameState(logic, game, user, turn);
 
-    await game.save({}, { useMasterKey: true, cascadeSave: true });
+    await game.save({}, { useMasterKey: true });
   },
   {
     fields: {
