@@ -1,0 +1,19 @@
+name: Deploy
+
+on: 
+  release: 
+  workflow_dispatch:
+
+jobs:
+  push-to-server:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: deploy command
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          script: ./deploy_chess_backend.sh
