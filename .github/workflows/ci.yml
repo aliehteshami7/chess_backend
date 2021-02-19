@@ -3,7 +3,24 @@ name: Docker Image CI
 on: [push]
 
 jobs:
-
+  build-node-server-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          cd node_server
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login https://docker.pkg.github.com -u ${GITHUB_ACTOR} --password-stdin
+          docker build -t docker.pkg.github.com/OWNER/aliehteshami7/chess_backend/node_server:latest
+          docker push docker.pkg.github.com/OWNER/aliehteshami7/chess_backend/node_server:latest
+  build-parse-server-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          cd parse_node
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login https://docker.pkg.github.com -u ${GITHUB_ACTOR} --password-stdin
+          docker build -t docker.pkg.github.com/OWNER/aliehteshami7/chess_backend/parse_Server:latest
+          docker push docker.pkg.github.com/OWNER/aliehteshami7/chess_backend/parse_server:latest
   build:
     runs-on: ubuntu-20.04
     steps:
