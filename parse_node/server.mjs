@@ -5,11 +5,11 @@ import http from 'http';
 const app = express();
 const api = new ParseServer({
   databaseURI: process.env.PARSE_SERVER_DATABASE_URI,
-  cloud: './cloud/main.cjs',
+  cloud: './cloud/main.js',
   appId: process.env.PARSE_SERVER_APPLICATION_ID,
   masterKey: process.env.PARSE_SERVER_MASTER_KEY,
   javascriptKey: process.env.PARSE_SERVER_JAVASCRIPT_KEY,
-  liveQuery: { classNames: ['Game'] },
+  liveQuery: process.env.PARSE_SERVER_LIVE_QUERY,
 });
 
 const port = 1337;
