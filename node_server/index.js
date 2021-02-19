@@ -20,7 +20,7 @@ function initGame() {
     })
     .addString('state', {
       required: true,
-      defaultValue: 'NOT_STARTED', // valid options: NOT_STARTED, ON_GOING, DRAW, USER1_WON, USER2_WON
+      defaultValue: 'NOT_STARTED',
     });
   schema.setCLP({
     get: { '*': true },
@@ -37,6 +37,10 @@ function initGame() {
 
 function updateUserSchema() {
   return new Parse.Schema('_User')
+    .addNumber('score', {
+      required: true,
+      defaultValue: 0,
+    })
     .addNumber('current_win_streak', {
       required: true,
       defaultValue: 0,
