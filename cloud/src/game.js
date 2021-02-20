@@ -27,22 +27,32 @@ export const correctUser = (game, user, turn) => {
   return user.id === game.get('user2').id;
 };
 
-export const loseGame = async (game, user, turn) => {
-  const anotherUser = turn ? game.get('user1') : game.get('user2');
+export const loseGame = async (game, user) => {
+  const [anotherUser, result] =
+    game.get('user1').id === user.id
+      ? [game.get('user2'), GAME_STATES.USER2_WON]
+      : [game.get('user1'), GAME_STATES.USER1_WON];
+
   await lose(user);
   await win(anotherUser);
-  game.set('state', turn ? GAME_STATES.USER1_WON : GAME_STATES.USER2_WON);
+  game.set('state', result);
 };
 
-const winGame = async (game, user, turn) => {
-  const anotherUser = turn ? game.get('user1') : game.get('user2');
+const winGame = async (game, user) => {
+  const [anotherUser, result] =
+    game.get('user1').id === user.id
+      ? [game.get('user2'), GAME_STATES.USER1_WON]
+      : [game.get('user1'), GAME_STATES.USER2_WON];
+
   await win(user);
   await lose(anotherUser);
-  game.set('state', turn ? GAME_STATES.USER2_WON : GAME_STATES.USER1_WON);
+  game.set('state', result);
 };
 
-const drawGame = async (game, user, turn) => {
-  const anotherUser = turn ? game.get('user1') : game.get('user2');
+const drawGame = async (game, user) => {
+  const anotherUser =
+    game.get('user1').id === user.id ? game.get('user2') : game.get('user1');
+
   await draw(user);
   await draw(anotherUser);
   game.set('state', GAME_STATES.DRAW);

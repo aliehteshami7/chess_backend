@@ -23,6 +23,7 @@ const updateBadges = (user) => {
 };
 
 export const win = async (user) => {
+  await user.fetch();
   const current_win_streak = user.get('current_win_streak') + 1 || 1;
   const score = user.get('score') + 1 || 1;
   user.set('current_win_streak', current_win_streak);
@@ -33,6 +34,7 @@ export const win = async (user) => {
 };
 
 export const lose = async (user) => {
+  await user.fetch();
   const score = user.get('score') || 0;
   user.set('current_win_streak', 0);
   user.set('score', score);
@@ -40,6 +42,7 @@ export const lose = async (user) => {
 };
 
 export const draw = async (user) => {
+  await user.fetch();
   const score = user.get('score') + 0.5 || 0.5;
   user.set('current_win_streak', 0);
   user.set('score', score);
