@@ -27,7 +27,7 @@ See `http://localhost/parse_dashboard`.
 
 ## Create Cloud Codes
 
-Go to cloud dir and run above code.
+Go to cloud dir and run the below code.
 
 ```
 yarn
