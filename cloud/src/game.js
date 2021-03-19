@@ -58,11 +58,11 @@ const drawGame = async (game, user) => {
   game.set('state', GAME_STATES.DRAW);
 };
 
-export const updateGameState = async (logic, game, user, turn) => {
+export const updateGameState = async (logic, game, user) => {
   if (logic.in_checkmate()) {
-    await winGame(game, user, turn);
+    await winGame(game, user);
   } else if (logic.in_draw()) {
-    await drawGame(game, user, turn);
+    await drawGame(game, user);
   }
 };
 

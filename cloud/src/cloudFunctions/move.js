@@ -18,7 +18,7 @@ Parse.Cloud.define(
 
     game.add('moves', move);
 
-    await updateGameState(logic, game, user, turn);
+    await updateGameState(logic, game, user);
 
     await game.save({}, { useMasterKey: true });
   },
